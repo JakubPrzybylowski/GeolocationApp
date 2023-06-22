@@ -8,9 +8,13 @@ namespace GeolocationApp.Dto
 {
     public  class GeolocationDto
     {
+        public GeolocationDto()
+        {
+
+        }
         public GeolocationDto(Geolocation geolocation)
         {
-            IpAddress = geolocation.Ip_address;
+            Ip = geolocation.Ip;
             Hostname = geolocation.Hostname;
             Type = geolocation.Type;
             ContinentCode = geolocation.Continent_code;
@@ -22,7 +26,7 @@ namespace GeolocationApp.Dto
             City = geolocation.City;
             Zip = geolocation.Zip;
         }
-        public string IpAddress { get; set; }
+        public string Ip { get; set; }
         public string Hostname { get; set; }
         public string Type { get; set; }
         public string ContinentCode { get; set; }

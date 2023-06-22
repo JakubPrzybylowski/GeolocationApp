@@ -10,7 +10,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Ip_address" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ip" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Hostname" Type="nvarchar" MaxLength="50" />
           <Property Name="Type" Type="nchar" MaxLength="10" />
           <Property Name="Continent_code" Type="nchar" MaxLength="50" />
@@ -35,7 +35,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Ip_address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Hostname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Type" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Continent_code" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
@@ -47,7 +47,7 @@
           <Property Name="City" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="Zip" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
         </EntityType>
-        <EntityContainer Name="GeolocationManagementDBEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="GeolocationManagementDBEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Geolocations" EntityType="Self.Geolocation" />
         </EntityContainer>
       </Schema>
@@ -55,12 +55,12 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GeolocationManagementDBModelStoreContainer" CdmEntityContainer="GeolocationManagementDBEntities1">
+        <EntityContainerMapping StorageEntityContainer="GeolocationManagementDBModelStoreContainer" CdmEntityContainer="GeolocationManagementDBEntities2">
           <EntitySetMapping Name="Geolocations">
             <EntityTypeMapping TypeName="GeolocationManagementDBModel.Geolocation">
               <MappingFragment StoreEntitySet="Geolocation">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Ip_address" ColumnName="Ip_address" />
+                <ScalarProperty Name="Ip" ColumnName="Ip" />
                 <ScalarProperty Name="Hostname" ColumnName="Hostname" />
                 <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Continent_code" ColumnName="Continent_code" />

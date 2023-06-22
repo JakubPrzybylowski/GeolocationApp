@@ -16,7 +16,7 @@ namespace GeolocationApp
     public partial class GeolocationManagementDBEntities : DbContext
     {
         public GeolocationManagementDBEntities()
-            : base("name=GeolocationManagementDBEntities1")
+            : base("name=GeolocationManagementDBEntities2")
         {
         }
     

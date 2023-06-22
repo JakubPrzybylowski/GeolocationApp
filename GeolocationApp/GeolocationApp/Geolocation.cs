@@ -15,7 +15,7 @@ namespace GeolocationApp
     public partial class Geolocation
     {
         public int Id { get; set; }
-        public string Ip_address { get; set; }
+        public string Ip { get; set; }
         public string Hostname { get; set; }
         public string Type { get; set; }
         public string Continent_code { get; set; }

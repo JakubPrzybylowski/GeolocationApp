@@ -59,6 +59,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -92,28 +95,30 @@
     </Compile>
     <Compile Include="Dto\GeolocationDto.cs" />
     <Compile Include="Geolocation.cs">
-      <DependentUpon>GeolocationSystemManagement.tt</DependentUpon>
+      <DependentUpon>GeolocationSystemMenagement.tt</DependentUpon>
     </Compile>
-    <Compile Include="GeolocationSystemManagement.Context.cs">
+    <Compile Include="GeolocationSystemMenagement.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GeolocationSystemManagement.Context.tt</DependentUpon>
+      <DependentUpon>GeolocationSystemMenagement.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="GeolocationSystemManagement.cs">
+    <Compile Include="GeolocationSystemMenagement.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GeolocationSystemManagement.tt</DependentUpon>
+      <DependentUpon>GeolocationSystemMenagement.tt</DependentUpon>
     </Compile>
-    <Compile Include="GeolocationSystemManagement.Designer.cs">
+    <Compile Include="GeolocationSystemMenagement.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GeolocationSystemManagement.edmx</DependentUpon>
+      <DependentUpon>GeolocationSystemMenagement.edmx</DependentUpon>
     </Compile>
     <Compile Include="Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mappers\GeolocationMapper.cs" />
+    <Compile Include="Mappers\MapperBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -131,12 +136,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="GeolocationSystemManagement.edmx">
+    <EntityDeploy Include="GeolocationSystemMenagement.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>GeolocationSystemManagement.Designer.cs</LastGenOutput>
+      <LastGenOutput>GeolocationSystemMenagement.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="GeolocationSystemManagement.edmx.diagram">
-      <DependentUpon>GeolocationSystemManagement.edmx</DependentUpon>
+    <None Include="GeolocationSystemMenagement.edmx.diagram">
+      <DependentUpon>GeolocationSystemMenagement.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -155,15 +160,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>GeolocationManagementDB.mdf</DependentUpon>
     </Content>
-    <Content Include="GeolocationSystemManagement.Context.tt">
+    <Content Include="GeolocationSystemMenagement.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GeolocationSystemManagement.edmx</DependentUpon>
-      <LastGenOutput>GeolocationSystemManagement.Context.cs</LastGenOutput>
+      <DependentUpon>GeolocationSystemMenagement.edmx</DependentUpon>
+      <LastGenOutput>GeolocationSystemMenagement.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="GeolocationSystemManagement.tt">
+    <Content Include="GeolocationSystemMenagement.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GeolocationSystemManagement.edmx</DependentUpon>
-      <LastGenOutput>GeolocationSystemManagement.cs</LastGenOutput>
+      <DependentUpon>GeolocationSystemMenagement.edmx</DependentUpon>
+      <LastGenOutput>GeolocationSystemMenagement.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,11 @@
 ﻿using GeolocationApp.Dto;
+using GeolocationApp.Mappers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,42 +24,81 @@ namespace GeolocationApp
     /// </summary>
     public partial class Main : Window
     {
-        private ObservableCollection<Geolocation> ipDetailsList;
-
+        private GeolocationManagementDBEntities _db;
+        private GeolocationMapper _mapper;
+        private List<GeolocationDto> _ipDetails;
         public Main()
         {
             InitializeComponent();
 
-            GeolocationManagementDBEntities db = new GeolocationManagementDBEntities();
+            _db = new GeolocationManagementDBEntities();
+            _mapper = new GeolocationMapper();
             // Initialize the IP details list
-            var ipDetails = from g in db.Geolocations select g;
-            var ipDetailsDto = new List<GeolocationDto>() { new GeolocationDto(ipDetails.First()) };
-            lvIPDetails.ItemsSource = ipDetailsDto.ToList();
+            var ipDetails = from g in _db.Geolocations select g;
+            _ipDetails = new List<GeolocationDto>();
+            foreach (var geolocation in _db.Geolocations.ToList())
+            {
+                var geolocationDto = _mapper.Map(geolocation);
+                _ipDetails.Add(geolocationDto);
+
+            }; lvIPDetails.ItemsSource = _ipDetails.ToList();
         }
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private async void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             // Add button click event handler
             string ipAddress = txtIP.Text; // Get the IP address from the textbox
 
-            // Perform the necessary logic to retrieve the IP details and create an IPDetails object
-            Geolocation ipDetails = RetrieveIPDetails(ipAddress);
+            // Replace 'YOUR_ACCESS_KEY' with your actual access key from ipstack.com
+            string accessKey = "80c9d357fcf5de8f4d8e5a517c9f14e8";
 
-            if (ipDetails != null)
+
+            string url = $"http://api.ipstack.com/{ipAddress}?access_key={accessKey}";
+
+            try
             {
-                // Add the IP details to the list
-                ipDetailsList.Add(ipDetails);
+                using (HttpClient client = new HttpClient())
+                {
+                    // Send the HTTP GET request
+                    HttpResponseMessage response = await client.GetAsync(url);
+
+                    // Check if the request was successful (status code 200)
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Access and print the JSON response
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var ipDetail = JsonConvert.DeserializeObject<Geolocation>(responseBody);
+                        if (ipDetail != null)
+                        {
+                            _db.Geolocations.Add(ipDetail);
+                            _db.SaveChanges();
+                            var ipDetailDto = _mapper.Map(ipDetail);
+                            _ipDetails.Add(ipDetailDto);
+
+                        }
+                        _db.Geolocations.Add(ipDetail);
+                        _db.SaveChanges();
+                        
+                        lvIPDetails.ItemsSource = _ipDetails;
+                    }
+                    else
+                    {
+                        string errorMessage = $@"{response.RequestMessage.Content}
+                                              Error: {response.StatusCode}";                      
+                        MessageBox.Show(errorMessage);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
             }
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             // Delete button click event handler
-            if (lvIPDetails.SelectedIndex != -1)
-            {
-                // Remove the selected item from the list
-                ipDetailsList.RemoveAt(lvIPDetails.SelectedIndex);
-            }
+
         }
 
         private void btnGet_Click(object sender, RoutedEventArgs e)
@@ -65,44 +107,9 @@ namespace GeolocationApp
             if (lvIPDetails.SelectedIndex != -1)
             {
                 // Get the selected item from the list
-                Geolocation selectedIPDetails = ipDetailsList[lvIPDetails.SelectedIndex];
 
                 // Display the selected IP details in a message box or perform any desired action
-                MessageBox.Show($"Selected IP Details:\n\n" +
-                                $"ID: {selectedIPDetails.Id}\n" +
-                                $"IP Address: {selectedIPDetails.Ip_address}\n" +
-                                $"Hostname: {selectedIPDetails.Hostname}\n" +
-                                $"Type: {selectedIPDetails.Type}\n" +
-                                $"Continent Code: {selectedIPDetails.Continent_code}\n" +
-                                $"Continent Name: {selectedIPDetails.Continent_name}\n" +
-                                $"Region Code: {selectedIPDetails.Region_code}\n" +
-                                $"Region Name: {selectedIPDetails.Region_name}\n" +
-                                $"City: {selectedIPDetails.City}\n" +
-                                $"Zip: {selectedIPDetails.Zip}");
             }
-        }
-
-        // Method to retrieve IP details based on the provided IP address
-        private Geolocation RetrieveIPDetails(string ipAddress)
-        {
-            // Implement the logic to retrieve the IP details based on the provided IP address
-            // You can use any IP geolocation service or API to fetch the details
-
-            var ipDetails = new Geolocation
-            {
-                Id = ipDetailsList.Count + 1,
-                Ip_address = ipAddress,
-                Hostname = "example.com",
-                Type = "IPv4",
-                Continent_code = "NA",
-                Continent_name = "North America",
-                Region_code = "NY",
-                Region_name = "New York",
-                City = "New York City",
-                Zip = "10001"
-            };
-
-            return ipDetails;
         }
     }
 }

@@ -29,7 +29,7 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" Width="50" DisplayMemberBinding="{Binding Id}"/>
-                    <GridViewColumn Header="IP Address" Width="120" DisplayMemberBinding="{Binding IpAddress}"/>
+                    <GridViewColumn Header="IP Address" Width="120" DisplayMemberBinding="{Binding Ip}"/>
                     <GridViewColumn Header="Hostname" Width="120" DisplayMemberBinding="{Binding Hostname}"/>
                     <GridViewColumn Header="Type" Width="80" DisplayMemberBinding="{Binding Type}"/>
                     <GridViewColumn Header="Continent Code" Width="100" DisplayMemberBinding="{Binding ContinentCode}"/>
