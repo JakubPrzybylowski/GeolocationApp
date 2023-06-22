@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -41,7 +42,9 @@ namespace GeolocationApp
                 var geolocationDto = _mapper.Map(geolocation);
                 _ipDetails.Add(geolocationDto);
 
-            }; lvIPDetails.ItemsSource = _ipDetails.ToList();
+            }; 
+            
+            lvIPDetails.ItemsSource = _ipDetails.ToList();
         }
 
         private async void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -50,8 +53,7 @@ namespace GeolocationApp
             string ipAddress = txtIP.Text; // Get the IP address from the textbox
 
             // Replace 'YOUR_ACCESS_KEY' with your actual access key from ipstack.com
-            string accessKey = "80c9d357fcf5de8f4d8e5a517c9f14e8";
-
+            string accessKey = ConfigurationManager.AppSettings.Get("accessKey"); ;
 
             string url = $"http://api.ipstack.com/{ipAddress}?access_key={accessKey}";
 
